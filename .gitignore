@@ -1,0 +1,8 @@
+﻿################################################################################
+# Este arquivo .gitignore foi criado automaticamente pelo Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs
+/Poc1.Receiver.Api/.vs/Poc1.Receiver.Api/FileContentIndex
+/Poc1.Receiver.Api/Poc1.Receiver.Api/obj
+/Poc1.Receiver.Api/Poc1.Receiver.Test/obj
