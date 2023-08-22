@@ -9,9 +9,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Confluent.Kafka" Version="2.2.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="7.0.8" />
     <PackageReference Include="Microsoft.VisualStudio.Azure.Containers.Tools.Targets" Version="1.18.1" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Poc1.Receiver.Application\Poc1.Receiver.Application.csproj" />
+    <ProjectReference Include="..\Poc1.Receiver.Domain\Poc1.Receiver.Domain.csproj" />
   </ItemGroup>
 
 </Project>

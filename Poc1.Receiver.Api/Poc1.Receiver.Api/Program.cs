@@ -1,11 +1,16 @@
+using Poc1.Receiver.Application.Interfaces;
+using Poc1.Receiver.Domain.Events;
+
 var builder = WebApplication.CreateBuilder(args);
 
-// Add services to the container.
-
 builder.Services.AddControllers();
-// Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+//builder.Services.AddSingleton<IEventProducer<StartSyncEvent>>(sp =>
+//{
+//    var config = new ProducerConfig { BootstrapServers = "localhost:9092" }; 
+//    return new KafkaEventProducer<StartSyncEvent>("StartSync", config);
+//});
 
 var app = builder.Build();
 
