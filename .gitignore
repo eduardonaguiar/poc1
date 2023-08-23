@@ -12,3 +12,7 @@ obj/
 # Ignorar arquivos de configuração
 appsettings.json
 
+
+*.dll
+
+Poc1.Receiver.Api/.vs/Poc1/FileContentIndex/
