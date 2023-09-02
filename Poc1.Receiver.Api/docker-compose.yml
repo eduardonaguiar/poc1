@@ -1,0 +1,101 @@
+version: '3.8'
+
+services:
+  # Aplicativo .NET
+  poc1_receiver_api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:80"
+      - "5001:443"
+    depends_on:
+      - mongodb
+    networks:
+      - default
+
+  # MongoDB
+  mongodb:
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - c:/dev/data/db:/data/db
+    networks:
+      - default
+
+        # Redis
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+    networks:
+      - default
+
+  # Kafka e Zookeeper
+  kafka:
+    image: confluentinc/cp-kafka:latest
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+    ports:
+      - "9092:9092"
+    volumes:
+      - C:/dev/kafka/data:/var/lib/kafka/data
+      - C:/dev/kafka/config:/etc/kafka
+    networks:
+      - default
+
+  zookeeper:
+    image: confluentinc/cp-zookeeper:latest
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+    ports:
+      - "2181:2181"
+    volumes:
+      - C:/dev/zookeeper/data:/data
+      - C:/dev/zookeeper/datalog:/datalog
+      - C:/dev/zookeeper/config:/conf
+    networks:
+      - default
+
+  # Prometheus
+  prometheus:
+    image: prom/prometheus:latest
+    ports:
+      - "9090:9090"
+    # volumes:
+      - c:/dev/prometheus:/etc/prometheus
+    networks:
+      - monitoring
+    restart: "no"
+
+  # Alert Manager
+  alertmanager:
+    image: prom/alertmanager:latest
+    ports:
+      - "9093:9093"
+    volumes:
+      - c:/dev/alertmanager:/etc/alertmanager
+    networks:
+      - monitoring
+    restart: "no"
+    
+  # Grafana
+  grafana:
+    image: grafana/grafana:latest
+    ports:
+      - "3000:3000"
+    volumes:
+      - C:/dev/grafana/data:/var/lib/grafana
+      - C:/dev/grafana/config:/etc/grafana
+    networks:
+      - monitoring
+
+networks:
+  default:
+    driver: bridge
+  monitoring:
+    driver: bridge
